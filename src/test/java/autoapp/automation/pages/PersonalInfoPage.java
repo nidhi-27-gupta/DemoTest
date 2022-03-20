@@ -3,13 +3,16 @@ package autoapp.automation.pages;
 import autoapp.automation.utility.BrowserDriver;
 import cucumber.api.DataTable;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 import java.util.Map;
 
 public class PersonalInfoPage extends BasePage{
 
+    public static String Subheading_class = "page-subheading";
     public static String Mr_Id = "id_gender1";
     public static String Mrs_Id = "id_gender2";
     public static String firstname_Id = "customer_firstname";
@@ -28,6 +31,9 @@ public class PersonalInfoPage extends BasePage{
 
     public static void enterPersonalInformation(DataTable dataTable){
         List<Map<String,String>> personalInfo = dataTable.asMaps(String.class,String.class);
+
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(Subheading_class)));
 
         if(personalInfo.get(0).get("Gender") == "Mr"){
             driver.findElement(By.id(Mr_Id)).click();

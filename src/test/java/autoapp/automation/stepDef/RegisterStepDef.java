@@ -1,5 +1,7 @@
 package autoapp.automation.stepDef;
 
+import org.junit.Assert;
+
 import autoapp.automation.pages.PersonalInfoPage;
 import autoapp.automation.pages.RegisterPage;
 import cucumber.api.DataTable;
@@ -24,13 +26,17 @@ public class RegisterStepDef {
     @And("^I create account with emailid \"([^\"]*)\"$")
     public void i_create_account_with_emailid(String emailId) throws Throwable {
         RegisterPage.createAccount(emailId);
-        Thread.sleep(5000);
     }
 
 
     @Then("^I should be able to register with my below details$")
     public void i_should_be_able_to_register_with_my_below_details(DataTable dataTable) throws Throwable {
         PersonalInfoPage.enterPersonalInformation(dataTable);
-        Thread.sleep(5000);
+        
+    }
+
+    @Then("^I should see Invalid email address message$")
+    public void i_should_be_able_to_see_validation_message() throws Throwable {
+        Assert.assertEquals(true, RegisterPage.verifyEmailErrorMessage());
     }
 }
